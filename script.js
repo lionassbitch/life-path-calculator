@@ -48,12 +48,13 @@
 
 /* ---- SCROLL REVEAL ---- */
 (function initReveal() {
-  // Add reveal class to all major content blocks
   const targets = document.querySelectorAll(
-    '.section-header, .music-grid, .streaming-bar, ' +
+    '.section-header, ' +
     '.art-intro, .art-masonry, .art-cta-row, ' +
     '.merch-intro-strip, .merch-grid, ' +
-    '.track-row, .merch-card, .art-item, ' +
+    '.merch-card, .art-item, ' +
+    '.blog-grid, .blog-card, ' +
+    '.music-teaser-inner, ' +
     '.hero-content, .hero-ticker'
   );
 
@@ -78,9 +79,9 @@
 /* ---- STAGGER CHILDREN ON REVEAL ---- */
 (function initStagger() {
   const staggerGroups = [
-    { parent: '.track-list',  child: '.track-row', delay: 80 },
     { parent: '.merch-grid',  child: '.merch-card', delay: 100 },
-    { parent: '.art-masonry', child: '.art-item',   delay: 90 },
+    { parent: '.art-masonry', child: '.art-item',   delay: 90  },
+    { parent: '.blog-grid',   child: '.blog-card',  delay: 120 },
   ];
 
   staggerGroups.forEach(({ parent, child, delay }) => {
@@ -142,55 +143,18 @@
 })();
 
 
-/* ---- TRACK ROW: keyboard & click feedback ---- */
-(function initTrackRows() {
-  const rows = document.querySelectorAll('.track-row');
-
-  rows.forEach(row => {
-    const activate = () => {
-      // toggle a playing state
-      const wasActive = row.classList.contains('playing');
-      rows.forEach(r => r.classList.remove('playing'));
-      if (!wasActive) {
-        row.classList.add('playing');
-        const play = row.querySelector('.tr-play');
-        if (play) {
-          play.textContent = '⏸';
-          play.style.opacity = '1';
-          play.style.color = 'var(--red)';
-        }
-        const name = row.querySelector('.tr-name');
-        if (name) name.style.color = 'var(--red)';
+/* ---- MERCH: notify me stub ---- */
+(function initNotify() {
+  const notifiers = document.querySelectorAll('.merch-notify');
+  notifiers.forEach(el => {
+    el.addEventListener('click', () => {
+      const email = prompt('Drop your email and we\'ll hit you when it restocks:');
+      if (email && email.includes('@')) {
+        el.textContent = 'you\'re on the list';
+        el.style.color = 'var(--red)';
+        el.style.textDecoration = 'none';
+        el.style.cursor = 'default';
       }
-    };
-
-    row.addEventListener('click', activate);
-    row.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        activate();
-      }
-    });
-  });
-})();
-
-
-/* ---- MERCH: cart feedback ---- */
-(function initMerchButtons() {
-  const addBtns = document.querySelectorAll('.merch-card .btn-raw');
-
-  addBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const original = btn.textContent;
-      btn.textContent = 'ADDED ✓';
-      btn.style.background = '#1a9a00';
-      btn.style.color = 'var(--cream)';
-      setTimeout(() => {
-        btn.textContent = original;
-        btn.style.background = '';
-        btn.style.color = '';
-      }, 1800);
     });
   });
 })();
@@ -221,54 +185,108 @@
 })();
 
 
-/* ---- NOTIFY ME: email capture stub ---- */
-(function initNotify() {
-  const notifiers = document.querySelectorAll('.merch-notify');
-  notifiers.forEach(el => {
-    el.addEventListener('click', () => {
-      const email = prompt('Drop your email and we\'ll hit you when it restocks:');
-      if (email && email.includes('@')) {
-        el.textContent = 'you\'re on the list';
-        el.style.color = 'var(--red)';
-        el.style.textDecoration = 'none';
-        el.style.cursor = 'default';
-      }
-    });
-  });
-})();
-
-
-/* ---- STREAM LINKS: external feedback ---- */
+/* ---- STREAM LINKS: hover feedback ---- */
 (function initStreamLinks() {
   const links = document.querySelectorAll('.stream-link');
   links.forEach(link => {
+    link.addEventListener('mouseenter', () => {
+      if (!link.dataset.original) link.dataset.original = link.textContent;
+    });
+    // Only intercept placeholder # links — real URLs navigate normally
     link.addEventListener('click', (e) => {
+      if (link.getAttribute('href') !== '#') return;
       e.preventDefault();
+      const orig = link.textContent.replace(' ↗', '');
+      link.textContent = orig + ' ↗';
       link.style.color = 'var(--red)';
-      link.textContent = link.textContent + ' ↗';
       setTimeout(() => {
+        link.textContent = orig;
         link.style.color = '';
-        link.textContent = link.textContent.replace(' ↗', '');
       }, 1200);
     });
   });
 })();
 
 
-/* ---- WAVEFORM: pause animation on section out of view ---- */
-(function initWaveformVisibility() {
-  const waveform = document.querySelector('.waveform');
-  if (!waveform) return;
+/* ---- SHOPIFY BUY BUTTON INTEGRATION ---- */
+/*
+ * SETUP (3 steps):
+ *  1. Set SHOPIFY_DOMAIN to your store domain, e.g. 'your-store.myshopify.com'
+ *  2. Set SHOPIFY_TOKEN to your Storefront API access token
+ *     Shopify Admin → Settings → Apps → Develop apps → your app → API credentials
+ *     Storefront API access scopes: unauthenticated_read_product_listings
+ *  3. In index.html, replace data-product-id="REPLACE_WITH_PRODUCT_ID" on each
+ *     .shopify-btn-mount div with the numeric product ID from your Shopify admin URL
+ *     (e.g. admin.shopify.com/store/YOUR-STORE/products/7654321098765 → 7654321098765)
+ */
+(function initShopify() {
+  var SHOPIFY_DOMAIN = 'YOUR-STORE.myshopify.com';
+  var SHOPIFY_TOKEN  = 'YOUR_STOREFRONT_ACCESS_TOKEN';
 
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      const bars = waveform.querySelectorAll('span');
-      bars.forEach(bar => {
-        bar.style.animationPlayState = entry.isIntersecting ? 'running' : 'paused';
+  var mounts = document.querySelectorAll('.shopify-btn-mount');
+  if (!mounts.length) return;
+
+  // Don't initialize until credentials are filled in
+  if (SHOPIFY_DOMAIN.includes('YOUR-STORE') || SHOPIFY_TOKEN.includes('YOUR_')) return;
+
+  function buildUI() {
+    var client = ShopifyBuy.buildClient({
+      domain: SHOPIFY_DOMAIN,
+      storefrontAccessToken: SHOPIFY_TOKEN,
+    });
+
+    ShopifyBuy.UI.onReady(client).then(function(ui) {
+      mounts.forEach(function(node) {
+        var productId = node.dataset.productId;
+        if (!productId || productId === 'REPLACE_WITH_PRODUCT_ID') return;
+
+        ui.createComponent('product', {
+          id: productId,
+          node: node,
+          options: {
+            product: {
+              contents: {
+                img: false,
+                title: false,
+                price: false,
+                description: false,
+              },
+              text: { button: 'ADD' },
+              styles: {
+                button: {
+                  'font-family': "'Space Mono', 'Courier New', monospace",
+                  'font-size':   '10px',
+                  'font-weight': '700',
+                  'letter-spacing': '0.25em',
+                  'text-transform': 'uppercase',
+                  'color':            '#080808',
+                  'background-color': '#f0ede6',
+                  'padding': '9px 18px',
+                  'border-radius': '0',
+                  'border': 'none',
+                  ':hover': {
+                    'background-color': '#ff2d00',
+                    'color': '#f0ede6',
+                  },
+                  ':focus': {
+                    'background-color': '#ff2d00',
+                    'color': '#f0ede6',
+                  },
+                },
+              },
+            },
+          },
+        });
       });
-    },
-    { threshold: 0 }
-  );
+    });
+  }
 
-  observer.observe(waveform);
+  if (window.ShopifyBuy && window.ShopifyBuy.UI) {
+    buildUI();
+  } else {
+    var sdkScript = document.querySelector('script[src*="shopifycdn"]');
+    if (sdkScript) {
+      sdkScript.addEventListener('load', buildUI);
+    }
+  }
 })();

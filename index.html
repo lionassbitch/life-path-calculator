@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Big+Shoulders+Display:wght@400;700;900&display=swap" rel="stylesheet" />
+  <!-- Shopify Buy Button SDK -->
+  <script async src="https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js"></script>
 </head>
 <body>
 
@@ -19,8 +21,8 @@
   <nav class="nav">
     <span class="nav-logo">L.A.B</span>
     <ul class="nav-links">
-      <li><a href="#music" data-text="MUSIC">MUSIC</a></li>
       <li><a href="#art" data-text="ART">ART</a></li>
+      <li><a href="#blog" data-text="BLOG">BLOG</a></li>
       <li><a href="#merch" data-text="MERCH">MERCH</a></li>
     </ul>
     <div class="nav-static">&#9608;&#9608;&#9608;</div>
@@ -39,7 +41,7 @@
       </h1>
       <p class="hero-sub">raw sound &mdash; real art &mdash; no filter</p>
       <div class="hero-cta-row">
-        <a href="#music" class="btn-raw">HEAR IT</a>
+        <a href="#art" class="btn-raw">VIEW ART</a>
         <a href="#merch" class="btn-ghost">GET MERCH</a>
       </div>
     </div>
@@ -52,104 +54,31 @@
     </div>
   </section>
 
-  <!-- MUSIC -->
-  <section class="music" id="music">
-    <div class="section-header">
-      <span class="section-num">01</span>
-      <h2 class="section-title">MUSIC</h2>
-      <div class="section-line"></div>
-    </div>
-
-    <div class="music-grid">
-
-      <article class="track featured-track">
-        <div class="track-art" style="background: linear-gradient(135deg, #ff2d00 0%, #1a0000 100%);">
-          <div class="track-art-overlay">
-            <svg viewBox="0 0 100 100" width="60" height="60" class="play-icon">
-              <polygon points="20,10 80,50 20,90" fill="currentColor"/>
-            </svg>
-          </div>
-          <div class="track-noise"></div>
-        </div>
-        <div class="track-info">
-          <div class="track-label">LATEST DROP</div>
-          <h3 class="track-name">KING OF NOTHING</h3>
-          <p class="track-meta">2024 &nbsp;/&nbsp; 3:47</p>
-          <div class="waveform" aria-hidden="true">
-            <span></span><span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span><span></span>
-          </div>
-          <a href="#" class="btn-raw small">STREAM</a>
-        </div>
-      </article>
-
-      <div class="track-list">
-        <article class="track-row" tabindex="0">
-          <span class="tr-num">02</span>
-          <div class="tr-info">
-            <span class="tr-name">BLOOD IN THE WATER</span>
-            <span class="tr-year">2024</span>
-          </div>
-          <span class="tr-duration">4:12</span>
-          <div class="tr-play">&#9654;</div>
-        </article>
-        <article class="track-row" tabindex="0">
-          <span class="tr-num">03</span>
-          <div class="tr-info">
-            <span class="tr-name">CRAWL BEFORE YOU BURN</span>
-            <span class="tr-year">2024</span>
-          </div>
-          <span class="tr-duration">2:58</span>
-          <div class="tr-play">&#9654;</div>
-        </article>
-        <article class="track-row" tabindex="0">
-          <span class="tr-num">04</span>
-          <div class="tr-info">
-            <span class="tr-name">TEETH &amp; FIRE</span>
-            <span class="tr-year">2023</span>
-          </div>
-          <span class="tr-duration">5:03</span>
-          <div class="tr-play">&#9654;</div>
-        </article>
-        <article class="track-row" tabindex="0">
-          <span class="tr-num">05</span>
-          <div class="tr-info">
-            <span class="tr-name">MIDNIGHT ANIMAL</span>
-            <span class="tr-year">2023</span>
-          </div>
-          <span class="tr-duration">3:29</span>
-          <div class="tr-play">&#9654;</div>
-        </article>
-        <article class="track-row" tabindex="0">
-          <span class="tr-num">06</span>
-          <div class="tr-info">
-            <span class="tr-name">WRECKAGE (DEMO)</span>
-            <span class="tr-year">2023</span>
-          </div>
-          <span class="tr-duration">6:18</span>
-          <div class="tr-play">&#9654;</div>
-        </article>
+  <!-- MUSIC COMING SOON -->
+  <section class="music-teaser" id="music">
+    <div class="music-teaser-noise" aria-hidden="true"></div>
+    <div class="music-teaser-inner">
+      <span class="music-teaser-label">COMING SOON</span>
+      <div class="music-teaser-title" aria-label="MUSIC INCOMING">
+        MUSIC<span class="music-teaser-slash">//</span>INCOMING
       </div>
-
-    </div>
-
-    <div class="streaming-bar">
-      <span class="streaming-label">FIND IT ON</span>
-      <a href="#" class="stream-link">SPOTIFY</a>
-      <a href="#" class="stream-link">APPLE MUSIC</a>
-      <a href="#" class="stream-link">SOUNDCLOUD</a>
-      <a href="#" class="stream-link">BANDCAMP</a>
+      <p class="music-teaser-sub">something is being recorded. no dates. no promises. stay close.</p>
+      <div class="music-teaser-platforms">
+        <span class="streaming-label">FOLLOW ON</span>
+        <a href="#" class="stream-link">SPOTIFY</a>
+        <a href="#" class="stream-link">APPLE MUSIC</a>
+        <a href="#" class="stream-link">SOUNDCLOUD</a>
+        <a href="#" class="stream-link">BANDCAMP</a>
+      </div>
     </div>
   </section>
 
   <!-- ART -->
   <section class="art" id="art">
-    <div class="art-bg-num" aria-hidden="true">02</div>
+    <div class="art-bg-num" aria-hidden="true">01</div>
 
     <div class="section-header inverted">
-      <span class="section-num">02</span>
+      <span class="section-num">01</span>
       <h2 class="section-title">ART</h2>
       <div class="section-line"></div>
     </div>
@@ -235,9 +164,16 @@
   </section>
 
   <!-- MERCH -->
+  <!--
+    SHOPIFY SETUP:
+    1. Set SHOPIFY_DOMAIN and SHOPIFY_TOKEN in script.js
+    2. Replace data-product-id on each .shopify-btn-mount div below
+       with the numeric product ID from your Shopify admin
+       (open a product → the number in the URL is the ID)
+  -->
   <section class="merch" id="merch">
     <div class="section-header">
-      <span class="section-num">03</span>
+      <span class="section-num">02</span>
       <h2 class="section-title">MERCH</h2>
       <div class="section-line"></div>
     </div>
@@ -261,7 +197,7 @@
           <h3 class="merch-name">LOGO HEAVY TEE</h3>
           <div class="merch-bottom">
             <span class="merch-price">$38</span>
-            <a href="#" class="btn-raw small">ADD</a>
+            <div class="shopify-btn-mount" data-product-id="REPLACE_WITH_PRODUCT_ID"></div>
           </div>
         </div>
       </article>
@@ -298,7 +234,7 @@
           <h3 class="merch-name">DEBUT EP POSTER &mdash; 18x24</h3>
           <div class="merch-bottom">
             <span class="merch-price">$22</span>
-            <a href="#" class="btn-raw small">ADD</a>
+            <div class="shopify-btn-mount" data-product-id="REPLACE_WITH_PRODUCT_ID"></div>
           </div>
         </div>
       </article>
@@ -318,7 +254,7 @@
           <h3 class="merch-name">6-PANEL SNAPBACK</h3>
           <div class="merch-bottom">
             <span class="merch-price">$34</span>
-            <a href="#" class="btn-raw small">ADD</a>
+            <div class="shopify-btn-mount" data-product-id="REPLACE_WITH_PRODUCT_ID"></div>
           </div>
         </div>
       </article>
@@ -338,7 +274,7 @@
           <h3 class="merch-name">DEBUT EP &mdash; 12" VINYL</h3>
           <div class="merch-bottom">
             <span class="merch-price">$28</span>
-            <a href="#" class="btn-raw small">ADD</a>
+            <div class="shopify-btn-mount" data-product-id="REPLACE_WITH_PRODUCT_ID"></div>
           </div>
         </div>
       </article>
@@ -358,11 +294,58 @@
           <h3 class="merch-name">ZINE NO. 01 &mdash; ED. OF 100</h3>
           <div class="merch-bottom">
             <span class="merch-price">$15</span>
-            <a href="#" class="btn-raw small">ADD</a>
+            <div class="shopify-btn-mount" data-product-id="REPLACE_WITH_PRODUCT_ID"></div>
           </div>
         </div>
       </article>
 
+    </div>
+  </section>
+
+  <!-- BLOG -->
+  <section class="blog" id="blog">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">BLOG</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="blog-grid">
+
+      <article class="blog-card blog-card--featured">
+        <div class="blog-card-meta">
+          <span class="blog-tag">PROCESS</span>
+          <time class="blog-date" datetime="2024-11-18">NOV 18, 2024</time>
+        </div>
+        <h3 class="blog-card-title">THE MAKING OF ZINE NO. 01</h3>
+        <p class="blog-card-excerpt">Three months of cutting, printing, and arguing about margins. What it actually takes to hand-number 100 copies at 2am.</p>
+        <a href="blog/zine-making.html" class="blog-read-more">READ <span class="blog-arrow">&#8594;</span></a>
+      </article>
+
+      <article class="blog-card">
+        <div class="blog-card-meta">
+          <span class="blog-tag">THOUGHTS</span>
+          <time class="blog-date" datetime="2024-10-05">OCT 05, 2024</time>
+        </div>
+        <h3 class="blog-card-title">WHY WE ONLY PLAY UNDERGROUND</h3>
+        <p class="blog-card-excerpt">The backstage rooms smell. The sound is never right. We keep going back.</p>
+        <a href="blog/underground.html" class="blog-read-more">READ <span class="blog-arrow">&#8594;</span></a>
+      </article>
+
+      <article class="blog-card">
+        <div class="blog-card-meta">
+          <span class="blog-tag">TOUR</span>
+          <time class="blog-date" datetime="2024-09-12">SEP 12, 2024</time>
+        </div>
+        <h3 class="blog-card-title">WHAT TOUR PREP ACTUALLY LOOKS LIKE</h3>
+        <p class="blog-card-excerpt">No rider, no bus, no crew. Just a van that smells like amp cables and cold coffee.</p>
+        <a href="blog/tour-prep.html" class="blog-read-more">READ <span class="blog-arrow">&#8594;</span></a>
+      </article>
+
+    </div>
+
+    <div class="blog-footer-row">
+      <a href="blog/index.html" class="btn-ghost">ALL POSTS</a>
     </div>
   </section>
 
